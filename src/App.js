@@ -191,6 +191,7 @@ const ProductDetail = ({product:p,onClose,onAddCart,wishlist,onToggleWish}) => {
 };
 
 
+// eslint-disable-next-line
 const CheckoutBtn = ({cart}) => {
   const [loading, setLoading] = useState(false);
   const handleCheckout = async () => {
