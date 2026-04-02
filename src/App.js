@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { getProducts } from "./shopify-api";
 
-import { getProducts } from "./shopify-api";
 
 const C = {
   white:"#FFFFFF", bg:"#F5F5F5", dark:"#1A1A1A", text:"#333", textSec:"#777", textLight:"#999",
@@ -19,13 +18,6 @@ const CATS = [
 const [PRODUCTS, setProducts] = useState([]);
   const [loadingProducts, setLoadingProducts] = useState(true);
   useEffect(() => {
-    getProducts({ first: 50 }).then(data => {
-      setProducts(data.products);
-      setLoadingProducts(false);
-    }).catch(err => {
-      console.error("Shopify error:", err);
-      setLoadingProducts(false);
-    });
   }, []);
 const FLASH = [
   {id:101,name:"توب بيبي ساتان",price:12000,old:24000,left:14},
@@ -251,11 +243,7 @@ const CartDrawer = ({open,onClose,cart,onQty,onRemove}) => {
 /* ═══ MAIN APP ═══ */
 export default function KyrenApp() {
   const [PRODUCTS, setProducts] = useState([]);
-  useEffect(() => {
-    getProducts({ first: 50 })
-      .then(data => setProducts(data.products))
-      .catch(err => console.error('Shopify error:', err));
-  }, []);
+  useEffect(() => { getProducts({ first: 50 }).then(d => setProducts(d.products)).catch(e => console.error(e)); }, []);
   const [tab,setTab]=useState("home");
   const [cat,setCat]=useState("all");
   const [cart,setCart]=useState([]);
@@ -267,7 +255,6 @@ export default function KyrenApp() {
   const [toast,setToast]=useState(null);
   const [bIdx,setBIdx]=useState(0);
   const [PRODUCTS,setProducts]=useState([]);
-  useEffect(()=>{getProducts({first:50}).then(d=>setProducts(d.products)).catch(e=>console.error(e))},[]);
 
   const banners = [
     {title:"كولكشن الربيع 🌸",sub:"خصم لغاية 30% على القطع الجديدة",bg:`linear-gradient(135deg, ${C.accent} 0%, #E8899A 50%, #F5B0BE 100%)`},
