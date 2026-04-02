@@ -20,7 +20,7 @@
 // ─── Configuration ───
 const SHOPIFY_CONFIG = {
   storeDomain: 'kyren.myshopify.com',       // دومين متجرك
-  storefrontToken: '19795cd0e149d811454a93307d54418c', // ← ضع التوكن هنا
+  storefrontToken: process.env.REACT_APP_STOREFRONT_TOKEN,
   apiVersion: '2024-10',
 };
 
