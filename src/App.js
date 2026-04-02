@@ -15,9 +15,7 @@ const CATS = [
   {id:"street",label:"Streetwear",emoji:"🔥"},{id:"kfashion",label:"K-Fashion",emoji:"🌸"},
   {id:"clean",label:"Clean Girl",emoji:"🤍"},{id:"sale",label:"تخفيضات",emoji:"🏷️"},
 ];
-const [PRODUCTS, setProducts] = useState([]);
-  const [loadingProducts, setLoadingProducts] = useState(true);
-  useEffect(() => {
+    useEffect(() => {
   }, []);
 const FLASH = [
   {id:101,name:"توب بيبي ساتان",price:12000,old:24000,left:14},
@@ -244,7 +242,7 @@ const CartDrawer = ({open,onClose,cart,onQty,onRemove}) => {
 export default function KyrenApp() {
   const [PRODUCTS, setProducts] = useState([]);
   useEffect(() => { getProducts({ first: 50 }).then(d => setProducts(d.products)).catch(e => console.error(e)); }, []);
-  const [tab,setTab]=useState("home");
+      const [tab,setTab]=useState("home");
   const [cat,setCat]=useState("all");
   const [cart,setCart]=useState([]);
   const [wish,setWish]=useState([]);
@@ -254,8 +252,7 @@ export default function KyrenApp() {
   const [detail,setDetail]=useState(null);
   const [toast,setToast]=useState(null);
   const [bIdx,setBIdx]=useState(0);
-  const [PRODUCTS,setProducts]=useState([]);
-
+  
   const banners = [
     {title:"كولكشن الربيع 🌸",sub:"خصم لغاية 30% على القطع الجديدة",bg:`linear-gradient(135deg, ${C.accent} 0%, #E8899A 50%, #F5B0BE 100%)`},
     {title:"Y2K Collection 💿",sub:"ارجعي للـ 2000s بأحلى ستايل",bg:"linear-gradient(135deg, #6C5CE7 0%, #A29BFE 50%, #DFE6E9 100%)"},
