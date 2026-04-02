@@ -32,7 +32,7 @@ const Stars = ({r,count}) => (
 
 const PBadge = ({type}) => {
   if(!type) return null;
-  const m = {sale:{bg:C.sale,t:"SALE"},new:{bg:C.accent,t:"NEW"},best:{bg:C.gold,t:"BEST"}};
+  const m = {sale:{bg:C.sale,t:"SALE"},new:{bg:C.accent,t:"NEW"},best:{bg:C.gold,t:"BEST"},out:{bg:"#999",t:"نفذ"}};
   const b = m[type];
   return <span style={{position:"absolute",top:8,right:8,zIndex:2,background:b.bg,color:"#FFF",fontSize:9,fontWeight:800,padding:"3px 8px",borderRadius:3,letterSpacing:.5,fontFamily:"system-ui"}}>{b.t}</span>;
 };
@@ -42,7 +42,8 @@ const DiscBadge = ({old,price}) => {
   return <span style={{position:"absolute",top:8,left:8,zIndex:2,background:"rgba(229,57,53,0.9)",color:"#FFF",fontSize:10,fontWeight:800,padding:"2px 6px",borderRadius:3,fontFamily:"system-ui"}}>-{Math.round((1-price/old)*100)}%</span>;
 };
 
-const PImg = ({alt,style:s}) => {
+const PImg = ({src,alt,style:s}) => {
+  if(src) return <img src={src} alt={alt||""} style={{...s,objectFit:"cover",display:"block"}} />;
   const cols = ["#F0E6E8","#E8EAF0","#E6F0E8","#F0EDE6","#EDE6F0","#E6ECF0"];
   const emojis = ["👗","👚","👖","👕","🧥","👜","👠","🧣","💃","👒","🩱","🧤"];
   const bg = cols[(alt||"").length % cols.length];
@@ -130,7 +131,7 @@ const ProductDetail = ({product:p,onClose,onAddCart,wishlist,onToggleWish}) => {
         <button onClick={onClose} style={{background:C.bg,border:"none",borderRadius:"50%",width:36,height:36,fontSize:18,cursor:"pointer",color:C.dark}}>→</button>
         <button onClick={()=>onToggleWish(p.id)} style={{background:C.bg,border:"none",borderRadius:"50%",width:36,height:36,fontSize:18,cursor:"pointer"}}>{isW?"❤️":"♡"}</button>
       </div>
-      <div style={{position:"relative"}}><PImg src={p.mainImage} alt={p.name} style={{width:"100%",height:400}} /><PBadge type={p.badge}/><DiscBadge old={p.old} price={p.price}/></div>
+      <div style={{position:"relative"}}><PImg src={p.mainImage} alt={p.name} style={{width:"100%",height:400}} /><PBadge type={p.available ? p.badge : 'out'}/><DiscBadge old={p.old} price={p.price}/></div>
       <div style={{padding:"16px 16px 120px"}}>
         <div style={{fontSize:12,color:C.accent,fontWeight:600,fontFamily:FONT,marginBottom:4}}>{p.brand}</div>
         <h2 style={{fontSize:18,fontWeight:700,color:C.dark,fontFamily:FONT,margin:"0 0 8px",lineHeight:1.4}}>{p.name}</h2>
