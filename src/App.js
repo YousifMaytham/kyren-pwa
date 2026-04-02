@@ -1,4 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
+import { getProducts } from "./shopify-api";
+
+import { getProducts } from "./shopify-api";
 
 const C = {
   white:"#FFFFFF", bg:"#F5F5F5", dark:"#1A1A1A", text:"#333", textSec:"#777", textLight:"#999",
@@ -13,20 +16,17 @@ const CATS = [
   {id:"street",label:"Streetwear",emoji:"🔥"},{id:"kfashion",label:"K-Fashion",emoji:"🌸"},
   {id:"clean",label:"Clean Girl",emoji:"🤍"},{id:"sale",label:"تخفيضات",emoji:"🏷️"},
 ];
-const PRODUCTS = [
-  {id:1,name:"توب كروب فراشات Y2K",brand:"KYREN Basics",price:25000,old:35000,cat:"y2k",rating:4.8,reviews:124,sold:340,badge:"sale",colors:["#FFB6C1","#B0C4DE","#2D2424"],sizes:["S","M","L"]},
-  {id:2,name:"بلوزة ساتان بو كوكيت",brand:"KYREN Coquette",price:32000,old:null,cat:"coquette",rating:4.9,reviews:89,sold:210,badge:"new",colors:["#FFE4E1","#FFF0F5","#2D2424"],sizes:["S","M","L","XL"]},
-  {id:3,name:"كارقو واسع ستريت",brand:"KYREN Street",price:45000,old:55000,cat:"street",rating:4.7,reviews:203,sold:520,badge:"best",colors:["#2D2424","#8B7E7E","#556B2F"],sizes:["S","M","L","XL"]},
-  {id:4,name:"سكيرت بليتس كوري",brand:"KYREN K-Style",price:28000,old:null,cat:"kfashion",rating:4.6,reviews:67,sold:180,badge:null,colors:["#FFB6C1","#E8D5B7","#B0C4DE"],sizes:["S","M","L"]},
-  {id:5,name:"تي شيرت اوفرسايز",brand:"KYREN Street",price:18000,old:22000,cat:"street",rating:4.5,reviews:312,sold:890,badge:"sale",colors:["#FFFFFF","#2D2424","#C8697B"],sizes:["M","L","XL","XXL"]},
-  {id:6,name:"فستان ميني فلورال",brand:"KYREN Coquette",price:38000,old:null,cat:"coquette",rating:4.9,reviews:45,sold:95,badge:"new",colors:["#FFE4E1","#E8C4C4","#FFF8F3"],sizes:["S","M","L"]},
-  {id:7,name:"جاكيت كروبد دنيم",brand:"KYREN Y2K",price:52000,old:65000,cat:"y2k",rating:4.8,reviews:78,sold:230,badge:"sale",colors:["#B0C4DE","#C8697B","#2D2424"],sizes:["S","M","L"]},
-  {id:8,name:"بنطلون واسع كتان",brand:"KYREN Clean",price:35000,old:null,cat:"clean",rating:4.7,reviews:156,sold:410,badge:null,colors:["#FFF8F3","#E8D5B7","#2D2424"],sizes:["S","M","L","XL"]},
-  {id:9,name:"كارديقان نت كوري",brand:"KYREN K-Style",price:29000,old:38000,cat:"kfashion",rating:4.6,reviews:92,sold:275,badge:"sale",colors:["#FFB6C1","#E8C4C4","#FFFFFF"],sizes:["S","M","L"]},
-  {id:10,name:"سيت رياضي كلين",brand:"KYREN Clean",price:48000,old:null,cat:"clean",rating:4.8,reviews:134,sold:350,badge:"best",colors:["#2D2424","#8B7E7E","#C8697B"],sizes:["S","M","L","XL"]},
-  {id:11,name:"توب كورسيه دانتيل",brand:"KYREN Coquette",price:22000,old:28000,cat:"coquette",rating:4.7,reviews:210,sold:600,badge:"sale",colors:["#FFE4E1","#C8697B","#2D2424"],sizes:["S","M","L"]},
-  {id:12,name:"جينز بيبي بلو واسع",brand:"KYREN Y2K",price:42000,old:null,cat:"y2k",rating:4.5,reviews:88,sold:195,badge:"new",colors:["#B0C4DE","#87CEEB","#E8F4FD"],sizes:["S","M","L","XL"]},
-];
+const [PRODUCTS, setProducts] = useState([]);
+  const [loadingProducts, setLoadingProducts] = useState(true);
+  useEffect(() => {
+    getProducts({ first: 50 }).then(data => {
+      setProducts(data.products);
+      setLoadingProducts(false);
+    }).catch(err => {
+      console.error("Shopify error:", err);
+      setLoadingProducts(false);
+    });
+  }, []);
 const FLASH = [
   {id:101,name:"توب بيبي ساتان",price:12000,old:24000,left:14},
   {id:102,name:"سكيرت تول ميني",price:15000,old:30000,left:8},
@@ -250,6 +250,12 @@ const CartDrawer = ({open,onClose,cart,onQty,onRemove}) => {
 
 /* ═══ MAIN APP ═══ */
 export default function KyrenApp() {
+  const [PRODUCTS, setProducts] = useState([]);
+  useEffect(() => {
+    getProducts({ first: 50 })
+      .then(data => setProducts(data.products))
+      .catch(err => console.error('Shopify error:', err));
+  }, []);
   const [tab,setTab]=useState("home");
   const [cat,setCat]=useState("all");
   const [cart,setCart]=useState([]);
@@ -260,6 +266,8 @@ export default function KyrenApp() {
   const [detail,setDetail]=useState(null);
   const [toast,setToast]=useState(null);
   const [bIdx,setBIdx]=useState(0);
+  const [PRODUCTS,setProducts]=useState([]);
+  useEffect(()=>{getProducts({first:50}).then(d=>setProducts(d.products)).catch(e=>console.error(e))},[]);
 
   const banners = [
     {title:"كولكشن الربيع 🌸",sub:"خصم لغاية 30% على القطع الجديدة",bg:`linear-gradient(135deg, ${C.accent} 0%, #E8899A 50%, #F5B0BE 100%)`},
@@ -499,3 +507,7 @@ export default function KyrenApp() {
     </div>
   );
 }
+
+
+
+

@@ -1,4 +1,6 @@
-const SHOPIFY_CONFIG = {
+const fs = require('fs');
+
+const content = `const SHOPIFY_CONFIG = {
   storeDomain: '2c5d77-c4.myshopify.com',
   storefrontToken: '19795cd0e149d811454a93307d54418c',
   apiVersion: '2024-10',
@@ -67,3 +69,7 @@ export async function getProducts({ first = 50 } = {}) {
 }
 
 export { SHOPIFY_CONFIG };
+`;
+
+fs.writeFileSync('src/shopify-api.js', content, 'utf8');
+console.log('Done! shopify-api.js written successfully.');
