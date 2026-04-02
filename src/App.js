@@ -72,9 +72,9 @@ const CountdownTimer = () => {
 };
 
 /* ─── Search Overlay ─── */
-const SearchOverlay = ({open,onClose,onSelect}) => {
+const SearchOverlay = ({open,onClose,onSelect,products=[]}) => {
   const [q,setQ]=useState("");
-  const res = q.length>0 ? PRODUCTS.filter(p=>p.name.includes(q)||p.brand.includes(q)) : [];
+  const res = q.length>0 ? products.filter(p=>p.name.includes(q)||p.brand.includes(q)) : [];
   if(!open) return null;
   return (
     <div style={{position:"fixed",inset:0,zIndex:200,background:C.white,direction:"rtl"}}>
@@ -483,7 +483,7 @@ export default function KyrenApp() {
       </div>
 
       {/* Overlays */}
-      <SearchOverlay open={searchOpen} onClose={()=>setSearchOpen(false)} onSelect={setDetail}/>
+      <SearchOverlay open={searchOpen} onClose={()=>setSearchOpen(false)} onSelect={setDetail} products={PRODUCTS}/>
       <ProductDetail product={detail} onClose={()=>setDetail(null)} onAddCart={addCart} wishlist={wish} onToggleWish={toggleWish}/>
       <CartDrawer open={cartOpen} onClose={()=>setCartOpen(false)} cart={cart} onQty={(item,q)=>{if(q<=0)setCart(prev=>prev.filter(i=>i.id!==item.id));else setCart(prev=>prev.map(i=>i.id===item.id?{...i,qty:q}:i))}} onRemove={item=>setCart(prev=>prev.filter(i=>i.id!==item.id))}/>
     </div>
