@@ -15,8 +15,6 @@ const CATS = [
   {id:"street",label:"Streetwear",emoji:"🔥"},{id:"kfashion",label:"K-Fashion",emoji:"🌸"},
   {id:"clean",label:"Clean Girl",emoji:"🤍"},{id:"sale",label:"تخفيضات",emoji:"🏷️"},
 ];
-    useEffect(() => {
-  }, []);
 const FLASH = [
   {id:101,name:"توب بيبي ساتان",price:12000,old:24000,left:14},
   {id:102,name:"سكيرت تول ميني",price:15000,old:30000,left:8},
