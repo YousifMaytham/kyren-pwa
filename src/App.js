@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { getProducts, createCheckout } from "./shopify-api";
+import { getProducts } from "./shopify-api";
 
 
 const C = {
