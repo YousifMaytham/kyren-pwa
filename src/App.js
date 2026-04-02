@@ -215,12 +215,6 @@ const CheckoutBtn = ({cart}) => {
     </button>
   );
 };
-  return (
-    <button onClick={handleCheckout} disabled={loading} style={{display:"block",width:"100%",textAlign:"center",background:C.dark,color:"#FFF",borderRadius:8,padding:"14px 0",fontSize:15,fontWeight:700,fontFamily:FONT,cursor:"pointer",border:"none",marginTop:12,opacity:loading?0.7:1}}>
-      {loading ? "جاري التحضير..." : "إتمام الطلب"}
-    </button>
-  );
-};
 
 /* ─── Cart Drawer ─── */
 const CartDrawer = ({open,onClose,cart,onQty,onRemove}) => {
