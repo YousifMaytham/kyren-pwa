@@ -192,7 +192,7 @@ const ProductDetail = ({product:p,onClose,onAddCart,wishlist,onToggleWish}) => {
 
 
 const CheckoutBtn = ({cart}) => {
-  const [loading, setLoading] = React.useState(false);
+  const [loading, setLoading] = useState(false);
   const handleCheckout = async () => {
     setLoading(true);
     try {
