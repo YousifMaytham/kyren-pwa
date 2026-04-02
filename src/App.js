@@ -102,7 +102,7 @@ const SearchOverlay = ({open,onClose,onSelect,products=[]}) => {
             <div style={{textAlign:"center",padding:40,color:C.textLight,fontFamily:FONT,fontSize:14}}>لا توجد نتائج لـ "{q}"</div>
           ) : res.map(p=>(
             <div key={p.id} onClick={()=>{onSelect(p);onClose()}} style={{display:"flex",gap:12,padding:"10px 0",borderBottom:`1px solid ${C.border}`,cursor:"pointer",alignItems:"center"}}>
-              <PImg alt={p.name} style={{width:50,height:50,borderRadius:6}} />
+              <PImg src={p.mainImage} alt={p.name} style={{width:50,height:50,borderRadius:6}} />
               <div style={{flex:1}}>
                 <div style={{fontSize:11,color:C.textLight,fontFamily:FONT}}>{p.brand}</div>
                 <div style={{fontSize:13,color:C.text,fontFamily:FONT,fontWeight:600}}>{p.name}</div>
@@ -130,7 +130,7 @@ const ProductDetail = ({product:p,onClose,onAddCart,wishlist,onToggleWish}) => {
         <button onClick={onClose} style={{background:C.bg,border:"none",borderRadius:"50%",width:36,height:36,fontSize:18,cursor:"pointer",color:C.dark}}>→</button>
         <button onClick={()=>onToggleWish(p.id)} style={{background:C.bg,border:"none",borderRadius:"50%",width:36,height:36,fontSize:18,cursor:"pointer"}}>{isW?"❤️":"♡"}</button>
       </div>
-      <div style={{position:"relative"}}><PImg alt={p.name} style={{width:"100%",height:400}} /><PBadge type={p.badge}/><DiscBadge old={p.old} price={p.price}/></div>
+      <div style={{position:"relative"}}><PImg src={p.mainImage} alt={p.name} style={{width:"100%",height:400}} /><PBadge type={p.badge}/><DiscBadge old={p.old} price={p.price}/></div>
       <div style={{padding:"16px 16px 120px"}}>
         <div style={{fontSize:12,color:C.accent,fontWeight:600,fontFamily:FONT,marginBottom:4}}>{p.brand}</div>
         <h2 style={{fontSize:18,fontWeight:700,color:C.dark,fontFamily:FONT,margin:"0 0 8px",lineHeight:1.4}}>{p.name}</h2>
@@ -205,7 +205,7 @@ const CartDrawer = ({open,onClose,cart,onQty,onRemove}) => {
           <>
             {cart.map(item=>(
               <div key={item.id} style={{display:"flex",gap:12,padding:"12px 16px",borderBottom:`1px solid ${C.border}`}}>
-                <PImg alt={item.name} style={{width:64,height:64,borderRadius:6,flexShrink:0}} />
+                <PImg src={item.mainImage} alt={item.name} style={{width:64,height:64,borderRadius:6,flexShrink:0}} />
                 <div style={{flex:1}}>
                   <div style={{fontSize:11,color:C.textLight,fontFamily:FONT}}>{item.brand}</div>
                   <div style={{fontSize:13,fontWeight:600,color:C.dark,fontFamily:FONT}}>{item.name}</div>
@@ -370,7 +370,7 @@ export default function KyrenApp() {
               {filtered.map((p,i)=>(
                 <div key={p.id} onClick={()=>setDetail(p)} style={{background:C.white,borderRadius:8,overflow:"hidden",border:`1px solid ${C.border}`,cursor:"pointer",animation:`fadeUp .35s ease ${i*0.04}s both`}}>
                   <div style={{position:"relative"}}>
-                    <PImg alt={p.name} style={{width:"100%",height:195}} />
+                    <PImg src={p.mainImage} alt={p.name} style={{width:"100%",height:195}} />
                     <PBadge type={p.badge}/><DiscBadge old={p.old} price={p.price}/>
                     <button onClick={e=>{e.stopPropagation();toggleWish(p.id)}} style={{position:"absolute",bottom:8,left:8,background:"rgba(255,255,255,0.9)",border:"none",borderRadius:"50%",width:30,height:30,fontSize:14,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}>{wish.includes(p.id)?"❤️":"♡"}</button>
                   </div>
@@ -401,7 +401,7 @@ export default function KyrenApp() {
             <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}>
               {PRODUCTS.filter(p=>wish.includes(p.id)).map(p=>(
                 <div key={p.id} onClick={()=>setDetail(p)} style={{background:C.white,borderRadius:8,overflow:"hidden",border:`1px solid ${C.border}`,cursor:"pointer"}}>
-                  <div style={{position:"relative"}}><PImg alt={p.name} style={{width:"100%",height:180}}/><button onClick={e=>{e.stopPropagation();toggleWish(p.id)}} style={{position:"absolute",top:8,left:8,background:"rgba(255,255,255,0.9)",border:"none",borderRadius:"50%",width:28,height:28,fontSize:14,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}>❤️</button></div>
+                  <div style={{position:"relative"}}><PImg src={p.mainImage} alt={p.name} style={{width:"100%",height:180}}/><button onClick={e=>{e.stopPropagation();toggleWish(p.id)}} style={{position:"absolute",top:8,left:8,background:"rgba(255,255,255,0.9)",border:"none",borderRadius:"50%",width:28,height:28,fontSize:14,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}>❤️</button></div>
                   <div style={{padding:"8px 10px 10px"}}><div style={{fontSize:10,color:C.textLight,fontFamily:FONT}}>{p.brand}</div><div style={{fontSize:12,fontWeight:600,color:C.dark,fontFamily:FONT,marginBottom:4}}>{p.name}</div><div style={{fontSize:13,fontWeight:800,color:C.accent,fontFamily:FONT}}>{fmt(p.price)} د.ع</div></div>
                 </div>
               ))}
