@@ -66,4 +66,21 @@ export async function getProducts({ first = 50 } = {}) {
   };
 }
 
+
+export async function createCheckout(lineItems) {
+  const query = `mutation {
+    checkoutCreate(input: {
+      lineItems: [${lineItems.map(i => `{ variantId: "${i.variantId}", quantity: ${i.quantity} }`).join(',')}]
+    }) {
+      checkout { id webUrl }
+      checkoutUserErrors { message }
+    }
+  }`;
+  const data = await shopifyFetch(query);
+  if (data.checkoutCreate.checkoutUserErrors.length > 0) {
+    throw new Error(data.checkoutCreate.checkoutUserErrors[0].message);
+  }
+  return data.checkoutCreate.checkout;
+}
+
 export { SHOPIFY_CONFIG };
