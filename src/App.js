@@ -266,7 +266,7 @@ export default function KyrenApp() {
     {title:"Y2K Collection 💿",sub:"ارجعي للـ 2000s بأحلى ستايل",bg:"linear-gradient(135deg, #6C5CE7 0%, #A29BFE 50%, #DFE6E9 100%)"},
     {title:"شحن مجاني 🚚",sub:"على كل الطلبات فوق 75,000 د.ع",bg:`linear-gradient(135deg, ${C.dark} 0%, #444 100%)`},
   ];
-  useEffect(()=>{const iv=setInterval(()=>setBIdx(i=>(i+1)%banners.length),4000);return()=>clearInterval(iv)},[]);
+  useEffect(()=>{const iv=setInterval(()=>setBIdx(i=>(i+1)%banners.length),4000);return()=>clearInterval(iv)},[banners.length]);
   const showToast = useCallback(msg=>{setToast(msg);setTimeout(()=>setToast(null),2200)},[]);
   const addCart = (p,qty=1)=>{
     setCart(prev=>{const ex=prev.find(i=>i.id===p.id);if(ex) return prev.map(i=>i.id===p.id?{...i,qty:i.qty+qty}:i);return[...prev,{...p,qty}]});
