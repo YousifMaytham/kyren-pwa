@@ -193,22 +193,28 @@ const ProductDetail = ({product:p,onClose,onAddCart,wishlist,onToggleWish}) => {
 
 // eslint-disable-next-line
 const CheckoutBtn = ({cart}) => {
-  const [loading, setLoading] = useState(false);
-  const handleCheckout = async () => {
-    setLoading(true);
-    try {
-      const lineItems = cart.map(item => ({
-        variantId: item.variants?.[0]?.id || item.id,
-        quantity: item.qty,
-      }));
-      const checkout = await createCheckout(lineItems);
-      window.open(checkout.webUrl, '_blank');
-    } catch(e) {
-      console.error(e);
+  const handleCheckout = () => {
+    // Build Shopify cart URL with all items
+    const items = cart.map(item => {
+      const variantId = item.variants?.[0]?.id || '';
+      // Extract numeric ID from Shopify GID format
+      const numericId = variantId.replace('gid://shopify/ProductVariant/', '');
+      return numericId + ':' + item.qty;
+    }).filter(i => i.includes(':'));
+    
+    if (items.length > 0) {
+      const cartUrl = 'https://kyren.store/cart/' + items.join(',');
+      window.open(cartUrl, '_blank');
+    } else {
       window.open('https://kyren.store', '_blank');
     }
-    setLoading(false);
   };
+  return (
+    <button onClick={handleCheckout} style={{display:"block",width:"100%",textAlign:"center",background:C.dark,color:"#FFF",borderRadius:8,padding:"14px 0",fontSize:15,fontWeight:700,fontFamily:FONT,cursor:"pointer",border:"none",marginTop:12}}>
+      إتمام الطلب
+    </button>
+  );
+};
   return (
     <button onClick={handleCheckout} disabled={loading} style={{display:"block",width:"100%",textAlign:"center",background:C.dark,color:"#FFF",borderRadius:8,padding:"14px 0",fontSize:15,fontWeight:700,fontFamily:FONT,cursor:"pointer",border:"none",marginTop:12,opacity:loading?0.7:1}}>
       {loading ? "جاري التحضير..." : "إتمام الطلب"}
